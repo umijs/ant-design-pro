@@ -10,6 +10,7 @@ import pathToRegexp from 'path-to-regexp';
 import Media from 'react-media';
 import { formatMessage } from 'umi/locale';
 import Authorized from '@/utils/Authorized';
+import { matchPath } from 'dva/router';
 import logo from '../assets/logo.svg';
 import Footer from './Footer';
 import Header from './Header';
@@ -95,7 +96,7 @@ class BasicLayout extends React.PureComponent {
     let routeAuthority = ['noAuthority'];
     const getAuthority = (key, routes) => {
       routes.map(route => {
-        if (route.path === key) {
+        if (matchPath(key, { path: route.path, exact: true })) {
           routeAuthority = route.authority;
         } else if (route.routes) {
           routeAuthority = getAuthority(key, route.routes);
